@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    *{
+        margin:  0;
+    }
+
+    .main-container {
+        max-width: 500px;
+        width: 100%;
+        height: 100vh;
+        padding: 10px;
+        box-sizing: border-box;
+        background-color: red;
+        margin: 0 auto;
+        transition: height 2s ease;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .grey-container {
+        display: relative;
+        width: 100%;
+        height: 100px;
+        background-color: rgb(56, 55, 55);
+        border-radius: 20px;
+    }
+
+    .black-entrance {
+        position: relative;
+        top: 0;
+        width: 90%;
+        height: 20px;
+        background-color: black;
+        border-radius: 50px;
+        margin: 20px auto 0 auto;
+    }
+
+    .slider {
+        position: absolute;
+        background-color: blue;
+        top: 50%;
+        left: 50%;
+        width: 95%;
+        height: 0;
+        overflow: hidden;
+        transform: translateX(-50%);
+        transition: height 5s ease;
+    }
+
+    .receipt-container {
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        height: auto;
+        background-color: white;
+        padding: 20px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3));
+    }
+
+    .slider::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: calc(40px);
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+        z-index: 2;
+    }
+
+    .heading-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .receipt-title {
+        text-align: center;
+        width: 100%;
+        font-size: 1.2rem;
+        border-bottom: 2px dashed rgb(72, 72, 72);
+        padding: 5px 0;
+        border-top: 2px dashed black;
+        color: rgb(94, 94, 94);
+    }
+
+    .amount-details-container {
+        width: 100%;
+        padding: 5px;
+        box-sizing: border-box;
+    }
+
+    .amount-info-container {
+        width: 100%;
+        display: flex;
+        padding-bottom: 10px;
+        justify-content: space-between;
+    }
+
+    .amount-info-container:nth-child(2) {
+        border-bottom: 1px solid rgb(234, 234, 234);
+    }
+
+    .payment-title {
+        color: rgb(94, 94, 94);
+    }
+
+    .all-user-infos {
+        width: 100%;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        border-bottom: 1px solid rgb(234, 234, 234);
+    }
+
+    .avatar-container {
+        padding: 10px;
+        border-right: 1px solid rgb(234, 234, 234);
+    }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+        flex: 0 0 40px;
+        border-radius: 50%;
+        background-color: gray;
+        box-sizing: border-box;
+    }
+
+    .user-info-status {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding-left: 10px;
+    }
+
+    .status {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 8px;
+        border-radius: 5px;
+        border: 1px solid rgb(185, 185, 185);
+    }
+
+    .check-mark {
+        width: 12px;
+        height: 12px;
+        color: white;
+        background-color: rgb(5, 196, 5);
+        border-radius: 50%;
+        padding: 2px;
+    }
+
+    .payment-status-below-container {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        width: 100%;
+        border: 1px solid rgb(185, 185, 185);
+        border-radius: 20px;
+        padding: 10px 18px 25px 18px;
+        box-sizing: border-box;
+    }
+
+    .payment-status-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .progressbar-outer {
+        position: relative;
+        width: 100%;
+        height: 10px;
+        background-color: rgb(234, 234, 234);
+        border-radius: 10px;
+    }
+
+
+    .progressbar-inner {
+        position: relative;
+        width: 80%;
+        height: 100%;
+        background-color: black;
+        border-radius: 10px;
+    }
+
+    .check-mark-round-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        transform: translateY(-30%);
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: white;
+        width: max-content;
+        filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
+    }
+
+    .check-mark-round-container:nth-child(2) {
+        left: calc(90%/3);
+    }
+
+    .check-mark-round-container:nth-child(3) {
+        left: calc(90%/3 + 90%/3);
+    }
+
+    .check-mark-round-container:nth-child(4) {
+        left: 90%;
+    }
+
+    .stamp-round-container {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translateY(-30%);
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: white;
+        width: max-content;
+        filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
+    }
+
+    .stamp {
+        width: 15px;
+        height: 15px;
+    }
+
+    .btns {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
+        cursor: pointer;
+    }
+
+    .btn:nth-child(1) {
+        background-color: black;
+        color: white;
+        transition: all 0.7s ease;
+    }
+
+    .btn:nth-child(1):hover {
+        background-color: white;
+        color: black;
+    }
+
+    .btn:nth-child(2) {
+        background-color: white;
+        color: black;
+        transition: all 0.7s ease;
+    }
+
+    .btn:nth-child(2):hover {
+        background-color: black;
+        color: white;
+    }
+
+
+    
+</style>
+<body>
+    <div class="main-container">
+        <div class="grey-container">
+            <div class="black-entrance">
+                <div class="slider">
+                    <div class="receipt-container">
+                        <div class="heading-container">
+                            <h2 class="receipt-title">Trip Invoice - Japan Summer 2025</h2>
+                            <div class="amount-details-container">
+                                <div class="amount-info-container">
+                                    <p class="payment-title">Total</p>
+                                    <span>$30,000</span>
+                                </div>
+                                <div class="amount-info-container">
+                                    <p class="payment-title">Per Person</p>
+                                    <span>$6,000</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="all-user-infos">
+                            <div class="user-info">
+                                <div class="avatar-container">
+                                    <div class="avatar"></div>
+                                </div>
+                                <div class="user-info-status">
+                                    <p class="user-name">You</p>
+                                    <span class="status">
+                                        <svg class="check-mark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                        </svg>
+    
+                                        Paid
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="user-info">
+                                <div class="avatar-container">
+                                    <div class="avatar"></div>
+                                </div>
+                                <div class="user-info-status">
+                                    <p class="user-name">You</p>
+                                    <span class="status">
+                                        <svg class="check-mark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                        </svg>
+    
+                                        Paid
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="user-info">
+                                <div class="avatar-container">
+                                    <div class="avatar"></div>
+                                </div>
+                                <div class="user-info-status">
+                                    <p class="user-name">You</p>
+                                    <span class="status">
+                                        <svg class="check-mark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                        </svg>
+    
+                                        Paid
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="user-info">
+                                <div class="avatar-container">
+                                    <div class="avatar"></div>
+                                </div>
+                                <div class="user-info-status">
+                                    <p class="user-name">You</p>
+                                    <span class="status">Unpaid</span>
+                                </div>
+                            </div>
+                            <div class="user-info">
+                                <div class="avatar-container">
+                                    <div class="avatar"></div>
+                                </div>
+                                <div class="user-info-status">
+                                    <p class="user-name">You</p>
+                                    <span class="status">Unpaid</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="payment-status-below-container">
+                            <div class="payment-status-top">
+                                <p style="font-size: 1rem;">Payment Status</p>
+                                <p style="font-size: 1.2rem;">UNPAID</p>
+                            </div>
+                            <div class="progressbar-outer">
+                                <div class="progressbar-inner">
+                                    <div class="check-mark-round-container">
+                                        <svg class="check-mark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                        </svg>
+                                    </div>
+                                    <div class="check-mark-round-container">
+                                        <svg class="check-mark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                        </svg>
+                                    </div>
+                                    <div class="check-mark-round-container">
+                                        <svg class="check-mark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                        </svg>
+                                    </div>
+                                    <div class="check-mark-round-container">
+                                        <svg class="check-mark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="stamp-round-container">
+                                    <svg class="stamp" fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                            viewBox="0 0 433 433" xml:space="preserve">
+                                        <path d="M382.5,288H279.528L295.16,84.948c1.682-21.84-5.89-43.584-20.772-59.657C259.504,9.218,238.405,0,216.5,0
+                                            c-21.905,0-43.004,9.218-57.887,25.291c-14.883,16.072-22.454,37.816-20.772,59.657L153.473,288H50.5c-8.284,0-15,6.716-15,15v78
+                                            c0,8.284,6.716,15,15,15h15.848l12.885,30.854c1.555,3.723,5.193,6.146,9.228,6.146h256.08c4.034,0,7.673-2.424,9.228-6.146
+                                            L366.653,396H382.5c8.284,0,15-6.716,15-15v-78C397.5,294.716,390.784,288,382.5,288z M167.752,82.645
+                                            c-1.057-13.734,3.515-26.864,12.874-36.971C189.985,35.566,202.726,30,216.5,30s26.515,5.566,35.874,15.673
+                                            c9.359,10.107,13.931,23.237,12.874,36.972L249.439,288h-65.878L167.752,82.645z M65.5,318h302v48h-302V318z M337.879,413H95.121
+                                            l-7.1-17h256.957L337.879,413z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btns">
+                            <button class="btn">Send Reminder</button>
+                            <button class="btn">Download Invoice</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="pay">Pay Now</button>
+    </div>
+</body>
+
+<script>
+    const payBtn = document.getElementById('pay');
+    const slider = document.querySelector('.slider');
+    const receipt = document.querySelector('.receipt-container');
+    const main_container = document.querySelector('.main-container');
+
+    payBtn.addEventListener('click', () => {
+        slider.style.height = receipt.offsetHeight + 'px';
+        if (receipt.offsetHeight + 40 > main_container.offsetHeight) {
+            main_container.style.height = main_container.offsetHeight + (receipt.offsetHeight + 40 - main_container.offsetHeight) + 'px';
+        }
+    });
+
+    console.log(receipt.offsetHeight);
+    console.log(main_container.offsetHeight);
+</script>
+</html>
