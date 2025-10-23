@@ -52,6 +52,8 @@
         height: 0;
         overflow: hidden;
         transform: translateX(-50%);
+        
+        /* added transition so that height increase can be animated */
         transition: height 5s ease;
     }
 
@@ -329,6 +331,7 @@
             <div class="black-entrance">
                 <div class="slider">
                     <div class="receipt-container">
+                        <!-- top (title + amount details) section -->
                         <div class="heading-container">
                             <h2 class="receipt-title">Trip Invoice - Japan Summer 2025</h2>
                             <div class="amount-details-container">
@@ -342,6 +345,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- center (user infos) section -->
                         <div class="all-user-infos">
                             <div class="user-info">
                                 <div class="avatar-container">
@@ -427,11 +432,15 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- bottom (payment progress) section -->
                         <div class="payment-status-below-container">
                             <div class="payment-status-top">
                                 <p style="font-size: 1rem;">Payment Status</p>
                                 <p style="font-size: 1.2rem;">UNPAID</p>
                             </div>
+
+                            <!-- progress bar -->
                             <div class="progressbar-outer">
                                 <div class="progressbar-inner">
                                     <div class="check-mark-round-container">
@@ -469,6 +478,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- action btns -->
                         <div class="btns">
                             <button class="btn">Send Reminder</button>
                             <button class="btn">Download Invoice</button>
@@ -488,16 +499,18 @@
     const main_container = document.querySelector('.main-container');
 
     const delay = ms => new Promise(res => setTimeout(res, ms));
+
+    // On window load, show the pay button and adjust slider and container heights
     window.addEventListener('load', async () => {
         await delay(1000);
         payBtn.style.display = 'block';
-        slider.style.height = receipt.offsetHeight + 'px';
+        slider.style.height = receipt.offsetHeight + 'px';      // increase slider height to receipt height
+
+        // checks if receipt height + 50px is greater than main container height
         if (receipt.offsetHeight + 50 > main_container.offsetHeight) {
             main_container.style.height = main_container.offsetHeight + (receipt.offsetHeight + 100 - main_container.offsetHeight) + 'px';
         }
     });
 
-    console.log(receipt.offsetHeight);
-    console.log(main_container.offsetHeight);
 </script>
 </html>
